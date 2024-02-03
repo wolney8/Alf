@@ -15,6 +15,8 @@ from alexa_led_pattern import AlexaLedPattern
 from pathlib import Path
 from pydub import AudioSegment
 from pydub.playback import play
+from config import OPENAI_API_KEY
+
 
 # Set the working directory for Pi if you want to run this code via rc.local script so that it is automatically running on Pi startup. Remove this line if you have installed this project in a different directory.
 os.chdir('/home/pi/ChatGPT-OpenAI-Smart-Speaker')
@@ -22,7 +24,7 @@ os.chdir('/home/pi/ChatGPT-OpenAI-Smart-Speaker')
 # Load the environment variables
 load_dotenv()
 # Create an OpenAI API client
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ.get(OPENAI_API_KEY))
  
 # load pixels Class
 class Pixels:
