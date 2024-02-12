@@ -1,18 +1,18 @@
-from openai import OpenAI
+import json
+from gtts import gTTS
 import os
-from dotenv import load_dotenv
 
-"""Create your own holding message by running this script with a new message in the input below"""
+# Check if the subdirectory exists, create it if not
+if not os.path.exists('holding_messages'):
+    os.makedirs('holding_messages')
 
-# Load the environment variables
-load_dotenv()
+# Load phrases from JSON
+with open('holding_phrases.json', 'r') as json_file:
+    phrases = json.load(json_file)["phrases"]
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-
-response = client.audio.speech.create(
-    model="tts-1",
-    voice="fable",
-    input="One moment please",
-)
-
-response.stream_to_file("holding.mp3")
+# Generate a holding message for each phrase using gTTS
+for index, phrase in enumerate(phrases):
+    tts = gTTS(text=phrase, lang='en')
+    file_name = f"holding_messages/holding_{index}.mp3"
+    tts.save(file_name)
+    print(f"Generated {file_name}")
